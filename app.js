@@ -1,3 +1,6 @@
+let libretaData;
+// fetchInfo();
+
 const myButton = document.getElementById('fetch');
 myButton.addEventListener('click', fetchInfo);
 
@@ -6,8 +9,9 @@ function fetchInfo() {
     fetch('http://localhost:8080/api/v1')
         .then(response => response.json())
         .then(jsonObj => {
-            // the response from the api contains the array of contacts in the field data
-            displayUi(jsonObj.data)
+            // the response from the api contains the array of contacts in the data field
+            libretaData = jsonObj.data;
+            displayUi(libretaData);
         })
         .catch(err => {
             alert('API Could not be reached at this time');
@@ -15,26 +19,19 @@ function fetchInfo() {
         });
 }
 
+// loads the ui into the html div
 function displayUi(libreta) {
+    document.getElementById('template').innerHTML = getContactosDiv(libreta)
+}
+
+// builds the ui for a contact list
+function getContactosDiv(contactosData) {
     let contactosDiv = '';
-    for (let i = 0; i < libreta.length; i++) {
-        const { id, nombre, apellido, createdAt, updatedAt, telefonos } = libreta[i];
+    for (let i = 0; i < contactosData.length; i++) {
+        const { id, nombre, apellido, createdAt, updatedAt, telefonos } = contactosData[i];
 
-        let telefonosDiv = '';
-        for (let j = 0; j < telefonos.length; j++) {
-            const { id, telefono, createdAt, updatedAt } = telefonos[j];
-            const telefonoTemplate = `
-            <ul>
-                <li id="telefono${id}">
-                    <strong>${telefono}</strong>
-                </li>
-                <p><strong>Created at</strong>: ${createdAt}</p>
-                <p><strong>Updated at</strong>: ${updatedAt}</p>
-            </ul>
-        `;
-            telefonosDiv += telefonoTemplate;
-        }
-
+        // console.log(telefonos[0]);
+        let telefonosDiv = getTelefonosDiv(id, telefonos);
         const contactoTemplate = `
             <div>
                 <h1 id="contacto${id}">
@@ -49,7 +46,26 @@ function displayUi(libreta) {
         `;
         contactosDiv += contactoTemplate;
     }
+    return contactosDiv;
 
-    document.getElementById('template').innerHTML = contactosDiv;
+}
+
+// builds the ui for a contact's phone list
+function getTelefonosDiv(contactId, telefonosData) {
+    let telefonosDiv = '';
+    for (let j = 0; j < telefonosData.length; j++) {
+        const { id, telefono, createdAt, updatedAt } = telefonosData[j];
+        const telefonoTemplate = `
+            <ul>
+                <li id="telefono${id}">
+                    <strong>${telefono}</strong>                    
+                </li>
+                <p><strong>Created at</strong>: ${createdAt}</p>
+                <p><strong>Updated at</strong>: ${updatedAt}</p>
+            </ul>
+        `;
+        telefonosDiv += telefonoTemplate;
+    }
+    return telefonosDiv;
 }
 
