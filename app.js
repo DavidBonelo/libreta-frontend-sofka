@@ -36,6 +36,8 @@ function getContactosDiv(contactosData) {
             <div>
                 <h1 id="contacto${id}">
                     ${nombre} ${apellido}
+                    <button">edit</button>
+                    <button onclick="deleteContacto(${id})">delete</button>
                 </h1>
             
                 <p><strong>Created at</strong>: ${createdAt}</p>
@@ -90,4 +92,14 @@ window.onload = function () {
 
         contactForm.reset();
     });
+}
+
+function deleteContacto(id) {
+    fetch('http://localhost:8080/api/v1/contact/' + id, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+    }).then(response => {
+        console.log(response);
+    })
+        .catch(e => console.log('errorcito' + e));
 }
