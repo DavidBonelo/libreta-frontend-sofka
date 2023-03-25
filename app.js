@@ -69,3 +69,25 @@ function getTelefonosDiv(contactId, telefonosData) {
     return telefonosDiv;
 }
 
+// form submit override
+window.onload = function () {
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // before the code
+
+        const formData = Object.fromEntries(new FormData(contactForm));
+        console.log('to save ' + JSON.stringify(formData));
+
+
+        fetch('http://localhost:8080/api/v1/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: formData,
+        }).then(response => {
+            console.log(response);
+        })
+            .catch(e => console.log('errorcito' + e));
+
+        contactForm.reset();
+    });
+}

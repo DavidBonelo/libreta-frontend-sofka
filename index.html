@@ -12,6 +12,18 @@
     <h1> Libreta de contactos
         <button id="fetch">Cargar contactos</button>
     </h1>
+    <form id="contactForm" method="post">
+
+        <input id="contactId" type="hidden" name="id" value="">
+        
+        <label for="contactNombre" class="form-label">Nombres: </label>
+        <input id="contactNombre" type="text" name="nombre" value="" placeholder="Pepito" />
+
+        <label for="contactApellido" class="form-label">Apellidos: </label>
+        <input id="contactApellido" type="text" name="apellido" value="" placeholder="Perez" />
+        
+        <button type="submit">Guardar</button>
+    </form>
     <div id="template"></div>
     <script src="app.js"></script>
 </body>
