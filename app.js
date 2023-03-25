@@ -36,7 +36,7 @@ function getContactosDiv(contactosData) {
             <div>
                 <h1 id="contacto${id}">
                     ${nombre} ${apellido}
-                    <button">edit</button>
+                    <button onclick="editContacto(${i})">edit</button>
                     <button onclick="deleteContacto(${id})">delete</button>
                 </h1>
             
@@ -80,11 +80,13 @@ window.onload = function () {
         const formData = Object.fromEntries(new FormData(contactForm));
         console.log('to save ' + JSON.stringify(formData));
 
+        const endpoint = 'http://localhost:8080/api/v1/contact' + (formData.id == '' ? '' : ('/' + formData.id));
+        const method = formData.id == '' ? 'POST' : 'PUT';
 
-        fetch('http://localhost:8080/api/v1/contact', {
-            method: 'POST',
+        fetch(endpoint, {
+            method: method,
             headers: { 'Content-Type': 'application/json' },
-            body: formData,
+            body: JSON.stringify(formData),
         }).then(response => {
             console.log(response);
         })
@@ -102,4 +104,13 @@ function deleteContacto(id) {
         console.log(response);
     })
         .catch(e => console.log('errorcito' + e));
+}
+
+function editContacto(libretaIndex) {
+    const contactForm = document.getElementById('contactForm');
+    const contact = libretaData[libretaIndex];
+
+    contactForm.elements["id"].value = contact.id ?? '';
+    contactForm.elements["nombre"].value = contact.nombre;
+    contactForm.elements["apellido"].value = contact.apellido;
 }
