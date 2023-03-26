@@ -36,13 +36,16 @@ function getContactosDiv(contactosData) {
             <div>
                 <h1 id="contacto${id}">
                     ${nombre} ${apellido}
-                    <button onclick="editContacto(${i})">edit</button>
-                    <button onclick="deleteContacto(${id})">delete</button>
+                    <button onclick="editContacto(${i})" class="btn btn-outline-warning btn-sm">edit</button>
+                    <button onclick="deleteContacto(${id})" class="btn btn-outline-danger btn-sm">delete</button>
                 </h1>
             
                 <p><strong>Created at</strong>: ${createdAt}</p>
                 <p><strong>Updated at</strong>: ${updatedAt}</p>
                 <p><strong>Telefonos:</strong></p>
+                <button type="button" class="btn btn-outline-primary btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#phone-modal" onclick="editTelefono(${id})">
+                    Agregar telefono
+                </button>
                 ${telefonosDiv}
             </div>
         `;
@@ -51,7 +54,6 @@ function getContactosDiv(contactosData) {
     return contactosDiv;
 
 }
-
 // builds the ui for a contact's phone list
 function getTelefonosDiv(contactId, telefonosData) {
     let telefonosDiv = '';
@@ -60,7 +62,9 @@ function getTelefonosDiv(contactId, telefonosData) {
         const telefonoTemplate = `
             <ul>
                 <li id="telefono${id}">
-                    <strong>${telefono}</strong>                    
+                    <strong>${telefono}</strong>
+                    <button onclick="editTelefono(${contactId},${id},${telefono})" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#phone-modal">edit</button>
+                    <button onclick="deleteTelefono(${id})" class="btn btn-outline-danger btn-sm">delete</button>
                 </li>
                 <p><strong>Created at</strong>: ${createdAt}</p>
                 <p><strong>Updated at</strong>: ${updatedAt}</p>
@@ -117,3 +121,34 @@ function editTelefono(contactId, phoneId, telefono) {
     phoneForm.elements["id"].value = phoneId ?? '';
     phoneForm.elements["telefono"].value = telefono ?? '';
 }
+/* 
+{
+  "error": false,
+  "message": "",
+  "data": [
+    {
+      "id": 1,
+      "nombre": "string",
+      "apellido": "string",
+      "createdAt": "2023-03-21T19:53:30Z",
+      "updatedAt": "2023-03-21T19:53:30Z",
+      "telefonos": [
+        {
+          "id": 2,
+          "telefono": "123",
+          "createdAt": "2023-03-21T21:41:52Z",
+          "updatedAt": "2023-03-21T21:41:52Z"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "hello",
+      "apellido": "string",
+      "createdAt": "2023-03-21T19:53:57Z",
+      "updatedAt": "2023-03-21T19:53:57Z",
+      "telefonos": []
+    }
+  ]
+}
+*/
