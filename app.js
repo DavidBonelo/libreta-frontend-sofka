@@ -80,30 +80,10 @@ window.onload = function () {
         const formData = Object.fromEntries(new FormData(contactForm));
         console.log('to save ' + JSON.stringify(formData));
 
-        const endpoint = 'http://localhost:8080/api/v1/contact' + (formData.id == '' ? '' : ('/' + formData.id));
-        const method = formData.id == '' ? 'POST' : 'PUT';
-
-        fetch(endpoint, {
-            method: method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData),
-        }).then(response => {
-            console.log(response);
-        })
-            .catch(e => console.log('errorcito' + e));
+        saveContact(formData);
 
         contactForm.reset();
     });
-}
-
-function deleteContacto(id) {
-    fetch('http://localhost:8080/api/v1/contact/' + id, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-    }).then(response => {
-        console.log(response);
-    })
-        .catch(e => console.log('errorcito' + e));
 }
 
 function editContacto(libretaIndex) {
