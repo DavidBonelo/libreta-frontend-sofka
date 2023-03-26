@@ -8,6 +8,7 @@ function saveContact(contact) {
     makeRequest(endpoint, method, JSON.stringify(contact));
 }
 
+// creates a phone or updates it if id exist
 function savePhone(phone) {
     phone.contacto = { id: phone.contactId };
     console.log(JSON.stringify(phone));
@@ -17,15 +18,20 @@ function savePhone(phone) {
     makeRequest(endpoint, method, JSON.stringify(phone));
 }
 
+function searchContact(searchTerm) {
+    return makeRequest('http://localhost:8080/api/v1/search/contact/' + searchTerm, 'GET');
+    
+}
+
 function deleteContacto(id) {
     if (confirm('¿Está seguro que desea eliminar el contacto?')) {
-        makeRequest('http://localhost:8080/api/v1/contact/' + id, 'DELETE')
+        makeRequest('http://localhost:8080/api/v1/contact/' + id, 'DELETE');
     }
 }
 
 function deleteTelefono(id) {
     if (confirm('¿Está seguro que desea eliminar el telefono?')) {
-        makeRequest('http://localhost:8080/api/v1/phone/' + id, 'DELETE')
+        makeRequest('http://localhost:8080/api/v1/phone/' + id, 'DELETE');
     }
 };
 
@@ -36,8 +42,6 @@ function makeRequest(endpoint, method, body) {
         body: body,
     });
 
-    response.then(response => {
-        console.log(response)
-    })
+    return response.then(response => response.json())
         .catch(e => console.log('errorcito' + e));
 }

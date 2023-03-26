@@ -11,12 +11,31 @@
 </head>
 
 <body class="container">
-    <h1> Libreta de contactos
-        <button id="fetch" class="btn btn-outline-primary">Cargar contactos</button>
+    <h1 class="text-center">
+        Libreta de contactos
     </h1>
-    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#contact-modal">
-        Agregar contacto
-    </button>
+    <div class="row text-center">
+        <div class="col">
+            <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal"
+                data-bs-target="#contact-modal">
+                Agregar contacto
+            </button>
+        </div>
+        <div class="col">
+            <button id="fetch" class="btn btn-outline-success mb-3">Cargar contactos</button>
+        </div>
+
+        <div class="col">
+            <form id="searchForm" method="post">
+                <div class="input-group mb-3">
+                    <input id="searchBox" type="text" placeholder="Busqueda" name="searchterm" class="form-control">
+                    <button type="submit" class="btn btn-outline-secondary">Buscar</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
 
     <div id="template"></div>
 
@@ -48,7 +67,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Guardar</button>
+                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Guardar</button>
                     </div>
                 </form>
             </div>

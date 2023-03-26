@@ -86,7 +86,7 @@ window.onload = function () {
         console.log('to save ' + JSON.stringify(formData));
 
         saveContact(formData);
-
+        fetchInfo();
         contactForm.reset();
     });
 
@@ -99,10 +99,21 @@ window.onload = function () {
         console.log('to save ' + JSON.stringify(formData));
 
         savePhone(formData);
-
+        fetchInfo();
         phoneForm.reset();
 
     });
+
+    // search form submit
+    const searchForm = document.getElementById('searchForm');
+    searchForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const searchterm = Object.fromEntries(new FormData(searchForm)).searchterm;
+        searchContact(searchterm)
+            .then(result => displayUi(result.data));
+    });
+
 }
 
 function editContacto(libretaIndex) {
