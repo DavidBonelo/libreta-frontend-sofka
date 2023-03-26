@@ -15,16 +15,29 @@
     <form id="contactForm" method="post">
 
         <input id="contactId" type="hidden" name="id" value="">
-        
+
         <label for="contactNombre" class="form-label">Nombres: </label>
         <input id="contactNombre" type="text" name="nombre" value="" placeholder="Pepito" />
 
         <label for="contactApellido" class="form-label">Apellidos: </label>
         <input id="contactApellido" type="text" name="apellido" value="" placeholder="Perez" />
-        
+
         <button type="submit">Guardar</button>
     </form>
+
+    <form id="phoneForm" method="post">
+
+        <input id="contactId" type="hidden" name="contactId" value="">
+        <input id="phoneId" type="hidden" name="id" value="">
+
+        <label for="phoneNumber">Telefono: </label>
+        <input id="phoneNumber" type="text" name="telefono" value="" placeholder="+573334445566" />
+
+        <button type="submit">Guardar</button>
+    </form>
+
     <div id="template"></div>
+
     <script src="app.js"></script>
     <script src="crud.js"></script>
 </body>

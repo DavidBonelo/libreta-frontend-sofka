@@ -71,8 +71,9 @@ function getTelefonosDiv(contactId, telefonosData) {
     return telefonosDiv;
 }
 
-// form submit override
+// forms submit override
 window.onload = function () {
+    // contact form submit
     const contactForm = document.getElementById('contactForm');
     contactForm.addEventListener("submit", function (e) {
         e.preventDefault(); // before the code
@@ -84,6 +85,20 @@ window.onload = function () {
 
         contactForm.reset();
     });
+
+    // phone form submit
+    const phoneForm = document.getElementById('phoneForm');
+    phoneForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // before the code
+
+        const formData = Object.fromEntries(new FormData(phoneForm));
+        console.log('to save ' + JSON.stringify(formData));
+
+        savePhone(formData);
+
+        phoneForm.reset();
+
+    });
 }
 
 function editContacto(libretaIndex) {
@@ -93,4 +108,12 @@ function editContacto(libretaIndex) {
     contactForm.elements["id"].value = contact.id ?? '';
     contactForm.elements["nombre"].value = contact.nombre;
     contactForm.elements["apellido"].value = contact.apellido;
+}
+
+function editTelefono(contactId, phoneId, telefono) {
+    const phoneForm = document.getElementById('phoneForm');
+
+    phoneForm.elements["contactId"].value = contactId ?? '';
+    phoneForm.elements["id"].value = phoneId ?? '';
+    phoneForm.elements["telefono"].value = telefono ?? '';
 }
