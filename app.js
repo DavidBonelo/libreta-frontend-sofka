@@ -79,26 +79,26 @@ function getTelefonosDiv(contactId, telefonosData) {
 window.onload = function () {
     // contact form submit
     const contactForm = document.getElementById('contactForm');
-    contactForm.addEventListener("submit", function (e) {
+    contactForm.addEventListener("submit", async function (e) {
         e.preventDefault(); // before the code
 
         const formData = Object.fromEntries(new FormData(contactForm));
         console.log('to save ' + JSON.stringify(formData));
 
-        saveContact(formData);
+        await saveContact(formData);
         fetchInfo();
         contactForm.reset();
     });
 
     // phone form submit
     const phoneForm = document.getElementById('phoneForm');
-    phoneForm.addEventListener("submit", function (e) {
+    phoneForm.addEventListener("submit", async function (e) {
         e.preventDefault(); // before the code
 
         const formData = Object.fromEntries(new FormData(phoneForm));
         console.log('to save ' + JSON.stringify(formData));
 
-        savePhone(formData);
+        await savePhone(formData);
         fetchInfo();
         phoneForm.reset();
 

@@ -5,7 +5,7 @@ function saveContact(contact) {
     const endpoint = 'http://localhost:8080/api/v1/contact' + (contact.id == '' ? '' : ('/' + contact.id));
     const method = contact.id == '' ? 'POST' : 'PUT';
 
-    makeRequest(endpoint, method, JSON.stringify(contact));
+    return makeRequest(endpoint, method, JSON.stringify(contact));
 }
 
 // creates a phone or updates it if id exist
@@ -15,7 +15,7 @@ function savePhone(phone) {
     const endpoint = 'http://localhost:8080/api/v1/phone' + (phone.id == '' ? '' : ('/' + phone.id));
     const method = phone.id == '' ? 'POST' : 'PUT';
 
-    makeRequest(endpoint, method, JSON.stringify(phone));
+    return makeRequest(endpoint, method, JSON.stringify(phone));
 }
 
 function searchContact(searchTerm) {
@@ -23,15 +23,17 @@ function searchContact(searchTerm) {
     
 }
 
-function deleteContacto(id) {
+async function deleteContacto(id) {
     if (confirm('¿Está seguro que desea eliminar el contacto?')) {
-        makeRequest('http://localhost:8080/api/v1/contact/' + id, 'DELETE');
+        await makeRequest('http://localhost:8080/api/v1/contact/' + id, 'DELETE');
+        fetchInfo();
     }
 }
 
-function deleteTelefono(id) {
+async function deleteTelefono(id) {
     if (confirm('¿Está seguro que desea eliminar el telefono?')) {
-        makeRequest('http://localhost:8080/api/v1/phone/' + id, 'DELETE');
+        await makeRequest('http://localhost:8080/api/v1/phone/' + id, 'DELETE');
+        fetchInfo();
     }
 };
 
