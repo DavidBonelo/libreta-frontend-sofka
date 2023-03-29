@@ -20,7 +20,6 @@ function savePhone(phone) {
 
 function searchContact(searchTerm) {
     return makeRequest('http://localhost:8080/api/v1/search/contact/' + searchTerm, 'GET');
-    
 }
 
 async function deleteContacto(id) {

@@ -28,7 +28,7 @@ function displayUi(libreta) {
 function getContactosDiv(contactosData) {
     let contactosDiv = '';
     for (let i = 0; i < contactosData.length; i++) {
-        const { id, nombre, apellido, createdAt, updatedAt, telefonos } = contactosData[i];
+        const { id, nombre, apellido, email, fechaNacimiento, createdAt, updatedAt, telefonos } = contactosData[i];
 
         // console.log(telefonos[0]);
         let telefonosDiv = getTelefonosDiv(id, telefonos);
@@ -36,10 +36,13 @@ function getContactosDiv(contactosData) {
             <div>
                 <h1 id="contacto${id}">
                     ${nombre} ${apellido}
-                    <button onclick="editContacto(${i})" class="btn btn-outline-warning btn-sm">edit</button>
+                    <button onclick="editContacto(${i})" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#contact-modal">edit</button>
                     <button onclick="deleteContacto(${id})" class="btn btn-outline-danger btn-sm">delete</button>
                 </h1>
-            
+
+                ${!fechaNacimiento ? '' : '<p><strong>Fecha de nacimiento</strong>: ' + fechaNacimiento}</p>
+                ${!email ? '' : '<p><strong>E-mail</strong>: ' + email}</p>
                 <p><strong>Created at</strong>: ${createdAt}</p>
                 <p><strong>Updated at</strong>: ${updatedAt}</p>
                 <p><strong>Telefonos:</strong></p>
@@ -63,7 +66,8 @@ function getTelefonosDiv(contactId, telefonosData) {
             <ul>
                 <li id="telefono${id}">
                     <strong>${telefono}</strong>
-                    <button onclick="editTelefono(${contactId},${id},${telefono})" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#phone-modal">edit</button>
+                    <button onclick="editTelefono(${contactId},${id},${telefono})" class="btn btn-outline-warning btn-sm"
+                        data-bs-toggle="modal" data-bs-target="#phone-modal">edit</button>
                     <button onclick="deleteTelefono(${id})" class="btn btn-outline-danger btn-sm">delete</button>
                 </li>
                 <p><strong>Created at</strong>: ${createdAt}</p>
@@ -79,6 +83,8 @@ function getTelefonosDiv(contactId, telefonosData) {
 window.onload = function () {
     // contact form submit
     const contactForm = document.getElementById('contactForm');
+    const contactModal = new bootstrap.Modal(document.getElementById('contact-modal'));
+
     contactForm.addEventListener("submit", async function (e) {
         e.preventDefault(); // before the code
 
@@ -88,10 +94,13 @@ window.onload = function () {
         await saveContact(formData);
         fetchInfo();
         contactForm.reset();
+        contactModal.hide();
     });
 
     // phone form submit
     const phoneForm = document.getElementById('phoneForm');
+    const phoneModal = new bootstrap.Modal(document.getElementById('phone-modal'));
+
     phoneForm.addEventListener("submit", async function (e) {
         e.preventDefault(); // before the code
 
@@ -101,7 +110,7 @@ window.onload = function () {
         await savePhone(formData);
         fetchInfo();
         phoneForm.reset();
-
+        phoneModal.hide();
     });
 
     // search form submit
@@ -123,6 +132,8 @@ function editContacto(libretaIndex) {
     contactForm.elements["id"].value = contact.id ?? '';
     contactForm.elements["nombre"].value = contact.nombre;
     contactForm.elements["apellido"].value = contact.apellido;
+    contactForm.elements["email"].value = contact.email;
+    contactForm.elements["fechaNacimiento"].value = contact.fechaNacimiento;
 }
 
 function editTelefono(contactId, phoneId, telefono) {
@@ -131,6 +142,10 @@ function editTelefono(contactId, phoneId, telefono) {
     phoneForm.elements["contactId"].value = contactId ?? '';
     phoneForm.elements["id"].value = phoneId ?? '';
     phoneForm.elements["telefono"].value = telefono ?? '';
+}
+
+function resetContactoFormId() {
+    document.getElementById('contactForm').elements["id"].value = '';
 }
 /* 
 {

@@ -17,7 +17,7 @@
     <div class="row text-center">
         <div class="col">
             <button type="button" class="btn btn-outline-primary mb-3" data-bs-toggle="modal"
-                data-bs-target="#contact-modal">
+                data-bs-target="#contact-modal" onclick="resetContactoFormId()">
                 Agregar contacto
             </button>
         </div>
@@ -55,19 +55,33 @@
 
                                 <label for="contactNombre" class="form-label">Nombres: </label>
                                 <input id="contactNombre" type="text" class="form-control" name="nombre" value=""
-                                    placeholder="Pepito" />
+                                    placeholder="Pepito" required />
                             </div>
 
                             <div class="col">
                                 <label for="contactApellido" class="form-label">Apellidos: </label>
                                 <input id="contactApellido" type="text" class="form-control" name="apellido" value=""
-                                    placeholder="Perez" />
+                                    placeholder="Perez" required />
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+
+                                <label for="email" class="form-label">E-mail: </label>
+                                <input id="email" type="email" class="form-control" name="email" value=""
+                                    placeholder="nombre@ejemplo.com" />
+                            </div>
+                            <div class="col">
+
+                                <label for="fechaNacimiento" class="form-label">Fecha de nacimiento: </label>
+                                <input id="fechaNacimiento" type="date" class="form-control" name="fechaNacimiento"
+                                    value="" />
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Guardar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -90,12 +104,12 @@
                             <input id="phoneId" type="hidden" name="id" value="">
                             <label for="phoneNumber" class="form-label">Telefono: </label>
                             <input id="phoneNumber" type="text" class="form-control" name="telefono" value=""
-                                placeholder="+573334445566" />
+                                placeholder="+573334445566" required />
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success" data-bs-dismiss="modal">Guardar</button>
+                        <button type="submit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>
             </div>
