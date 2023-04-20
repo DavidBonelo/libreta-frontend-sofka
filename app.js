@@ -28,34 +28,52 @@ function displayUi(libreta) {
 function getContactosDiv(contactosData) {
     let contactosDiv = '';
     for (let i = 0; i < contactosData.length; i++) {
-        const { id, nombre, apellido, email, fechaNacimiento, createdAt, updatedAt, telefonos } = contactosData[i];
+        let { id, nombre, apellido, email, fechaNacimiento, createdAt, updatedAt, telefonos } = contactosData[i];
+        createdAt = new Date(createdAt).toLocaleString();
+        updatedAt = new Date(updatedAt).toLocaleString();
 
-        // console.log(telefonos[0]);
         let telefonosDiv = getTelefonosDiv(id, telefonos);
         const contactoTemplate = `
-            <div>
-                <h1 id="contacto${id}">
-                    ${nombre} ${apellido}
-                    <button onclick="editContacto(${i})" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
-                        data-bs-target="#contact-modal">edit</button>
-                    <button onclick="deleteContacto(${id})" class="btn btn-outline-danger btn-sm">delete</button>
-                </h1>
-
-                ${!fechaNacimiento ? '' : '<p><strong>Fecha de nacimiento</strong>: ' + fechaNacimiento}</p>
-                ${!email ? '' : '<p><strong>E-mail</strong>: ' + email}</p>
-                <p><strong>Created at</strong>: ${createdAt}</p>
-                <p><strong>Updated at</strong>: ${updatedAt}</p>
-                <p><strong>Telefonos:</strong></p>
-                <button type="button" class="btn btn-outline-primary btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#phone-modal" onclick="editTelefono(${id})">
-                    Agregar telefono
-                </button>
-                ${telefonosDiv}
+          <div
+            href="#"
+            class="list-group-item list-group-item-action d-flex gap-3 py-3"
+            aria-current="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              class="bi bi-file-person-fill flex-shrink-0"
+              viewBox="0 0 16 16"
+              width="32"
+              height="32"
+            >
+            <use xlink:href="#file-person" />
+            </svg>
+            
+            <div class="d-flex gap-2 w-100">
+                <div>
+                    <h6 id="contacto${id}">
+                        ${nombre} ${apellido}
+                        <button onclick="editContacto(${i})" class="btn btn-outline-warning btn-sm" data-bs-toggle="modal"
+                            data-bs-target="#contact-modal">edit</button>
+                        <button onclick="deleteContacto(${id})" class="btn btn-outline-danger btn-sm">delete</button>
+                    </h6>
+                    <p><strong>Created at</strong>: ${createdAt} - <strong>Updated at</strong>: ${updatedAt}</p>
+                    ${!fechaNacimiento ? '' : '<p><strong>Fecha de nacimiento</strong>: ' + fechaNacimiento}</p>
+                    ${!email ? '' : '<p><strong>E-mail</strong>: ' + email}</p>
+                    
+                    <p><strong>Telefonos:</strong></p>
+                    <button type="button" class="btn btn-outline-primary btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#phone-modal" onclick="editTelefono(${id})">
+                        Agregar telefono
+                    </button>
+                    ${telefonosDiv}
+                </div>
             </div>
+          </div>
         `;
         contactosDiv += contactoTemplate;
     }
     return contactosDiv;
-
 }
 // builds the ui for a contact's phone list
 function getTelefonosDiv(contactId, telefonosData) {
@@ -70,8 +88,7 @@ function getTelefonosDiv(contactId, telefonosData) {
                         data-bs-toggle="modal" data-bs-target="#phone-modal">edit</button>
                     <button onclick="deleteTelefono(${id})" class="btn btn-outline-danger btn-sm">delete</button>
                 </li>
-                <p><strong>Created at</strong>: ${createdAt}</p>
-                <p><strong>Updated at</strong>: ${updatedAt}</p>
+                <p><strong>Created at</strong>: ${createdAt} - <strong>Updated at</strong>: ${updatedAt}</p>
             </ul>
         `;
         telefonosDiv += telefonoTemplate;
