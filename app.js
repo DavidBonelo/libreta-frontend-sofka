@@ -79,7 +79,9 @@ function getContactosDiv(contactosData) {
 function getTelefonosDiv(contactId, telefonosData) {
     let telefonosDiv = '';
     for (let j = 0; j < telefonosData.length; j++) {
-        const { id, telefono, createdAt, updatedAt } = telefonosData[j];
+        let { id, telefono, createdAt, updatedAt } = telefonosData[j];
+        createdAt = new Date(createdAt).toLocaleString();
+        updatedAt = new Date(updatedAt).toLocaleString();
         const telefonoTemplate = `
             <ul>
                 <li id="telefono${id}">
